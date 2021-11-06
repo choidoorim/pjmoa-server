@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "alvin-server-db.c0oxos7bxraw.ap-northeast-2.rds.amazonaws.com",
+    "port": 3306,
+    "username": "admin",
+    "password": "a8856018",
+    "database": "Alvin_Server_RDS",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true
+  }
