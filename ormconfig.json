@@ -4,7 +4,7 @@
     "port": 3306,
     "username": "admin",
     "password": "a8856018",
-    "database": "Alvin_Server_RDS",
-    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "database": "PJmoa",
+    "entities": ["dist/entity/**/*.entity{.ts,.js}"],
     "synchronize": true
   }
