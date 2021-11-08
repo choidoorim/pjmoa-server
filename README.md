@@ -2,6 +2,13 @@
 - 프로젝트를 하고 싶은 사람들을 매칭해주는 서비스입니다.
 - NodeJs(express) -> NestJs Refactoring
 
+- Commit Message
+```
+Add : 파일추가
+Update : 파일내용 변경
+Delete : 파일 삭제
+```
+
 ### :file_folder: 디렉토리 구조
 ```bash
 📂 src
