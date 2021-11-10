@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, getManager, Repository } from 'typeorm';
 import { User } from '../entity/user/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -10,7 +11,7 @@ export class UserService {
         @InjectRepository(User) private readonly usersRepository: Repository<User>,
     ) {}
 
-    async signUp(user: CreateUserDTO) {
+    async doUserRegistration(user: CreateUserDTO) {
         const queryRunner = await getConnection().createQueryRunner();
         await queryRunner.startTransaction()
         try {
@@ -22,12 +23,5 @@ export class UserService {
         } finally {
             await queryRunner.release();
         }
-        // await getManager().transaction(async (transactionalEntityManager) => { 
-        //     const result:User = await this.usersRepository.save(user):User;
-        //     return result;
-        // }).catch((error) => {
-        //     throw new NotFoundException(`Failed SignUp ${error}`);
-        // })
-
     };
 }
