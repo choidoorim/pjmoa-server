@@ -4,11 +4,14 @@ import {
     PrimaryGeneratedColumn, 
     Timestamp,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
+    BaseEntity,
+    BeforeInsert
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
-export class User {
+export class User extends BaseEntity{
     @PrimaryGeneratedColumn()
     idx: number;
 
@@ -51,4 +54,11 @@ export class User {
 
     @Column({default:false})
     authStatus: boolean;
+    
+    // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
+    @BeforeInsert()
+    async setPassword(password: string) {
+        const salt = await bcrypt.genSalt();
+        this.password = await bcrypt.hash(password || this.password, salt);
+    }
 }
