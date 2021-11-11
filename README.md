@@ -14,12 +14,21 @@ Delete : 파일 삭제
 📂 src
  └── 📂 app
       📄 main.ts
-      └── 📂 user
-          └── 📂 dto
-          └── 📂 entities 
+      📄 app.module.ts
+      📄 app.utils.ts
+      └── 📂 user 
           ├── 📄user.controller.ts
-          ├── 📄user.model.ts
+          ├── 📄user.module.ts
           ├── 📄user.service.ts
+      └── 📂 dto
+        └── 📂 user 
+          ├── 📄create-user.dto.ts
+          ├── 📄login-user.dto.ts
+        └── 📂 board
+      └── 📂 entity
+        └── 📂 user 
+          ├── 📄user.entity.ts
+        └── 📂 board
 📄 .gitignore
 📄 README.md
 ```
