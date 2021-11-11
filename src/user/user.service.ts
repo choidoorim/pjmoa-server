@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, getManager, Repository } from 'typeorm';
 import { User } from '../entity/user/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
+import { loginUserDTO } from 'src/dto/user/login-user.dto';
+import { CHECK } from 'src/app.utils';
 
 // entity 파일에서 BaseEntity 를 상속받아 사용하면 InjectRepository 를 사용하지 않아도 된다.
 @Injectable()
@@ -15,8 +17,9 @@ export class UserService {
         const queryRunner = await getConnection().createQueryRunner();
         await queryRunner.startTransaction()
         try {
-            console.log(registerUserInfo)
-            const user = new User();
+            // userRepositoy.create() 메소드를 통해 user = new User() 와 같은 기능을 한다.
+            // Active Recore/Data Mapper 패턴과 같다. 
+            const user = await this.usersRepository.create();
             user.email = registerUserInfo.email;
             user.password = registerUserInfo.password;
             user.firstName = registerUserInfo.firstName;
@@ -24,7 +27,10 @@ export class UserService {
             user.age = registerUserInfo.age;
             user.phoneNumber = registerUserInfo.phoneNumber;
 
-            return await user.save(); 
+            const result = await this.usersRepository.save(user);
+
+            await queryRunner.commitTransaction();
+            return result; 
         } catch (error) {
             await queryRunner.rollbackTransaction();
             throw new NotFoundException(`Failed SignUp ${error}`);
@@ -32,4 +38,13 @@ export class UserService {
             await queryRunner.release();
         }
     };
+
+    async doUserLogin(loginUserInfo: loginUserDTO):Promise<boolean> {
+        try {
+            const result = await this.usersRepository.find({ where: {email: loginUserInfo.email} });
+            return await CHECK.PASSWORD_COMPARE(loginUserInfo.password, result[0].password);
+        } catch (error) {
+            throw new NotFoundException(`Failed Login ${error}`);
+        }
+    }
 }

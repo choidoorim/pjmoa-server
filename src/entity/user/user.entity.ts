@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-@Entity()
-export class User extends BaseEntity{
+@Entity({name: 'user'})
+export class User{
     @PrimaryGeneratedColumn()
     idx: number;
 
@@ -33,9 +33,6 @@ export class User extends BaseEntity{
 
     @Column({type: "text"})
     password: string;
-
-    @Column({type: "text"})
-    salt: string;
 
     @Column({length: 15})
     firstName: string;
