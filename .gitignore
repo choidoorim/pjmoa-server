@@ -14,6 +14,10 @@ lerna-debug.log*
 # Database
 ormconfig
 
+# ENV
+.env.dev
+.env.prod
+
 # OS
 .DS_Store
 

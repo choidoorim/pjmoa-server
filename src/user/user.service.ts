@@ -19,15 +19,15 @@ export class UserService {
         try {
             // userRepositoy.create() 메소드를 통해 user = new User() 와 같은 기능을 한다.
             // Active Recore/Data Mapper 패턴과 같다. 
-            const user = await this.usersRepository.create();
+            const user: User = await this.usersRepository.create();
             user.email = registerUserInfo.email;
             user.password = registerUserInfo.password;
-            user.firstName = registerUserInfo.firstName;
+            user.firstName  = registerUserInfo.firstName;
             user.lastName = registerUserInfo.lastName;
             user.age = registerUserInfo.age;
             user.phoneNumber = registerUserInfo.phoneNumber;
 
-            const result = await this.usersRepository.save(user);
+            const result: User = await this.usersRepository.save(user);
 
             await queryRunner.commitTransaction();
             return result; 
