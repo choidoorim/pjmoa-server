@@ -16,9 +16,14 @@ export class AppController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('/user/login')
   async login(@Body() loginUserInfo: loginUserDTO, @Request() req) {
-    return this.authService.login(req.user);
+    return {
+      isSuccess: true,
+      statusCode: 201,
+      statusMsg: 'login-User Success',
+      access_token: await this.authService.login(req.user),
+    };
   }
 
   @UseGuards(JwtAuthGuard)

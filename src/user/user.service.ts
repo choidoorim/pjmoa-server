@@ -47,7 +47,10 @@ export class UserService {
     }
   }
 
-  async findUser(email: string): Promise<User[]> {
-    return await this.usersRepository.find({ where: { email: email } });
+  async findUser(email: string): Promise<User> {
+    const [result] = await this.usersRepository.find({
+      where: { email: email },
+    });
+    return result;
   }
 }

@@ -32,7 +32,7 @@ import * as Joi from 'joi';
     UserModule,
     AuthModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

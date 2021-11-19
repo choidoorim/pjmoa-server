@@ -1,20 +1,29 @@
-import { Get, Post, Param, Body, Controller, UseGuards } from '@nestjs/common';
+import {
+  Get,
+  Post,
+  Param,
+  Body,
+  Controller,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entity/user/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
-import { loginUserDTO } from 'src/dto/user/login-user.dto';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('test')
-  async doTest(@Body() user) {
-    return await this.userService.findUser(user.email);
+  async doTest(@Request() req) {
+    console.log(req.user);
+    return await this.userService.findUser(req.user.email);
   }
 
-  @Post('/register')
+  @Post('register')
   async doUserRegistration(
     @Body() registerUserInfo: CreateUserDTO,
   ): Promise<User> {
@@ -29,14 +38,14 @@ export class UserController {
     });
   }
 
-  @Post('/login')
-  async doUserLogin(@Body() loginUserInfo: loginUserDTO) {
-    const loginUserResult = await this.userService.doUserLogin(loginUserInfo);
-    return Object.assign({
-      isSuccess: true,
-      statusCode: 201,
-      statusMsg: 'login-User Success',
-      data: { loginUserResult },
-    });
-  }
+  // @Post('/login')
+  // async doUserLogin(@Request() req, @Body() loginUserInfo: loginUserDTO) {
+  //   const loginUserResult = await this.userService.doUserLogin(loginUserInfo);
+  //   return Object.assign({
+  //     isSuccess: true,
+  //     statusCode: 201,
+  //     statusMsg: 'login-User Success',
+  //     data: { loginUserResult },
+  //   });
+  // }
 }
