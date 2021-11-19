@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getConnection, getManager, Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { User } from '../entity/user/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { loginUserDTO } from 'src/dto/user/login-user.dto';
@@ -45,5 +45,9 @@ export class UserService {
     } catch (error) {
       throw new NotFoundException(`Failed Login ${error}`);
     }
+  }
+
+  async findUser(email: string): Promise<User[]> {
+    return await this.usersRepository.find({ where: { email: email } });
   }
 }

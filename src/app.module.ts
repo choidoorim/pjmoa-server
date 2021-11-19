@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
 import * as Joi from 'joi';
 
 @Module({
@@ -28,6 +30,7 @@ import * as Joi from 'joi';
       synchronize: true,
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
