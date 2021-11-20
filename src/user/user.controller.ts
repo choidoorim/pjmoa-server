@@ -1,7 +1,6 @@
 import {
   Get,
   Post,
-  Param,
   Body,
   Controller,
   UseGuards,
@@ -11,10 +10,15 @@ import { UserService } from './user.service';
 import { User } from '../entity/user/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AuthService } from '../auth/auth.service';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('test')
@@ -38,14 +42,14 @@ export class UserController {
     });
   }
 
-  // @Post('/login')
-  // async doUserLogin(@Request() req, @Body() loginUserInfo: loginUserDTO) {
-  //   const loginUserResult = await this.userService.doUserLogin(loginUserInfo);
-  //   return Object.assign({
-  //     isSuccess: true,
-  //     statusCode: 201,
-  //     statusMsg: 'login-User Success',
-  //     data: { loginUserResult },
-  //   });
-  // }
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async doUserLogin(@Request() req) {
+    return {
+      isSuccess: true,
+      statusCode: 201,
+      statusMsg: 'login-User Success',
+      access_token: await this.authService.login(req.user),
+    };
+  }
 }

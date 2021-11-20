@@ -30,9 +30,8 @@ import * as Joi from 'joi';
       synchronize: true,
     }),
     UserModule,
-    AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
