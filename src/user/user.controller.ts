@@ -7,7 +7,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from '../entity/user/user.entity';
+import { User } from '../entity/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AuthService } from '../auth/auth.service';
@@ -23,7 +23,6 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('test')
   async doTest(@Request() req) {
-    console.log(req.user);
     return await this.userService.findUser(req.user.email);
   }
 
@@ -45,11 +44,12 @@ export class UserController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async doUserLogin(@Request() req) {
+    const loginResult = await this.authService.login(req.user);
     return {
       isSuccess: true,
       statusCode: 201,
       statusMsg: 'login-User Success',
-      access_token: await this.authService.login(req.user),
+      access_token: loginResult,
     };
   }
 }

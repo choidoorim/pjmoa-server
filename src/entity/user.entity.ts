@@ -42,7 +42,7 @@ export class User {
   age: number;
 
   @Column({ type: 'text' })
-  image: string;
+  imageUrl: string;
 
   @Column({ length: 15 })
   phoneNumber: string;

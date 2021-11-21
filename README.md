@@ -13,9 +13,6 @@ Delete : 파일 삭제
 ```bash
 📂 src
  └── 📂 app
-      📄 main.ts
-      📄 app.module.ts
-      📄 app.utils.ts
       └── 📂 user 
           ├── 📄user.controller.ts
           ├── 📄user.module.ts
@@ -24,11 +21,15 @@ Delete : 파일 삭제
         └── 📂 user 
           ├── 📄create-user.dto.ts
           ├── 📄login-user.dto.ts
-        └── 📂 board
+        └── 📂 notice
       └── 📂 entity
         └── 📂 user 
           ├── 📄user.entity.ts
-        └── 📂 board
+        └── 📂 notice
+      📄 main.ts
+      📄 app.module.ts
+      📄 app.utils.ts
+📂 test
 📄 .gitignore
 📄 README.md
 ```

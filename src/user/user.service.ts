@@ -1,12 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, Repository } from 'typeorm';
-import { User } from '../entity/user/user.entity';
+import { User } from '../entity/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
-import { loginUserDTO } from 'src/dto/user/login-user.dto';
-import { CHECK } from 'src/app.utils';
 
-// entity 파일에서 BaseEntity 를 상속받아 사용하면 InjectRepository 를 사용하지 않아도 된다.
 @Injectable()
 export class UserService {
   constructor(
@@ -17,8 +14,6 @@ export class UserService {
     const queryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      // userRepositoy.create() 메소드를 통해 user = new User() 와 같은 기능을 한다.
-      // Active Recore/Data Mapper 패턴과 같다.
       const user: User = await this.usersRepository.create(registerUserInfo);
 
       const result: User = await this.usersRepository.save(user);
@@ -33,24 +28,10 @@ export class UserService {
     }
   }
 
-  async doUserLogin(loginUserInfo: loginUserDTO): Promise<boolean> {
-    try {
-      const result = await this.usersRepository.find({
-        where: { email: loginUserInfo.email },
-      });
-      return await CHECK.PASSWORD_COMPARE(
-        loginUserInfo.password,
-        result[0].password,
-      );
-    } catch (error) {
-      throw new NotFoundException(`Failed Login ${error}`);
-    }
-  }
-
   async findUser(email: string): Promise<User> {
-    const [result] = await this.usersRepository.find({
+    const [findUserResult] = await this.usersRepository.find({
       where: { email: email },
     });
-    return result;
+    return findUserResult;
   }
 }
