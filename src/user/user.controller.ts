@@ -9,9 +9,9 @@ import {
 import { UserService } from './user.service';
 import { User } from '../entity/user.entity';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { AuthService } from '../auth/auth.service';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { JwtAuthGuard } from '../authentication/jwt-auth.guard';
+import { AuthService } from '../authentication/auth.service';
+import { LocalAuthGuard } from '../authentication/local-auth.guard';
 
 @Controller('user')
 export class UserController {

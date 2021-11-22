@@ -1,29 +1,8 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { Contents } from './common.entity';
 
 @Entity({ name: 'notice' })
-export class Notice {
-  @PrimaryGeneratedColumn()
-  idx: number;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-  })
-  updatedAt: Date;
-
-  @Column({ default: false })
-  status: boolean;
-
+export class Notice extends Contents {
   @Column({ length: 100 })
   title: string;
 

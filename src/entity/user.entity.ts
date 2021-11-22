@@ -1,31 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  BeforeInsert,
-} from 'typeorm';
+import { Entity, Column, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Contents } from './common.entity';
 
 @Entity({ name: 'user' })
-export class User {
-  @PrimaryGeneratedColumn()
-  idx: number;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-  })
-  updatedAt: Date;
-
-  @Column({ default: false })
-  status: boolean;
-
+export class User extends Contents {
   @Column({ length: 45 })
   email: string;
 
