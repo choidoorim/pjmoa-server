@@ -1,6 +1,7 @@
-import { Entity, Column, BeforeInsert } from 'typeorm';
+import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Contents } from './common.entity';
+import { Project } from './project.entity';
 
 @Entity({ name: 'user' })
 export class User extends Contents {
@@ -27,6 +28,9 @@ export class User extends Contents {
 
   @Column({ default: false })
   authStatus: boolean;
+
+  @OneToMany((type) => Project, (project) => project.userIdx)
+  project: Project[];
 
   // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
   @BeforeInsert()
