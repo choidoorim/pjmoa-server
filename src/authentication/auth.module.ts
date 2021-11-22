@@ -6,14 +6,16 @@ import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigService,
     forwardRef(() => UserModule),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: jwtConstants.expired },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

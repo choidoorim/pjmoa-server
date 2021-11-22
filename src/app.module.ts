@@ -26,7 +26,7 @@ import * as Joi from 'joi';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [`dist/entity/**/*.{ts,js}`],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     NoticeModule,

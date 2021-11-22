@@ -11,8 +11,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Database
-ormconfig
+# JWT
+/src/authentication/constants.ts
 
 # ENV
 .env.dev
