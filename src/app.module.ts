@@ -27,6 +27,10 @@ import * as Joi from 'joi';
       database: process.env.DATABASE_NAME,
       entities: [`dist/entity/**/*.{ts,js}`],
       synchronize: false,
+      logging: true,
+      extra: {
+        connectionLimit: process.env.DB_CONNECTION_LIMIT,
+      },
     }),
     UserModule,
     NoticeModule,

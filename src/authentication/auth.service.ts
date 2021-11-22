@@ -3,6 +3,7 @@ import { UserService } from '../user/user.service';
 import { CHECK } from '../app.utils';
 import { User } from '../entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { loginUserDTO } from "../dto/user/login-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -14,13 +15,12 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<any> {
     const user: User = await this.userService.findUser(email);
     if (user && (await CHECK.PASSWORD_COMPARE(password, user.password))) {
-      console.log(user.idx, user.email);
       return { idx: user.idx, email: user.email };
     }
     return null;
   }
 
-  async login(user: any) {
+  async doUserLogin(user: any) {
     const payload = { email: user.email, sub: user.idx };
     return this.jwtService.sign(payload);
   }

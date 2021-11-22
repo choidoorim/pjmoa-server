@@ -1,8 +1,8 @@
 import { Column, Entity } from 'typeorm';
-import { Contents } from './common.entity';
+import { Common } from './common.entity';
 
 @Entity({ name: 'notice' })
-export class Notice extends Contents {
+export class Notice extends Common {
   @Column({ length: 100 })
   title: string;
 

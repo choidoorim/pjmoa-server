@@ -44,12 +44,12 @@ export class UserController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async doUserLogin(@Request() req) {
-    const loginResult = await this.authService.login(req.user);
+    const jwtToken = await this.authService.doUserLogin(req.user);
     return {
       isSuccess: true,
       statusCode: 201,
       statusMsg: 'login-User Success',
-      access_token: loginResult,
+      access_token: jwtToken,
     };
   }
 }

@@ -14,6 +14,7 @@ export class UserService {
     const queryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {
+      // create: Active Record 에서 entity 에 BaseEntity 를 상속해서 사용하지 않도록 한다.
       const user: User = await this.usersRepository.create(registerUserInfo);
 
       const result: User = await this.usersRepository.save(user);

@@ -1,10 +1,10 @@
 import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Contents } from './common.entity';
+import { Common } from './common.entity';
 import { Project } from './project.entity';
 
 @Entity({ name: 'user' })
-export class User extends Contents {
+export class User extends Common {
   @Column({ length: 45 })
   email: string;
 
