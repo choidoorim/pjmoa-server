@@ -32,6 +32,12 @@ export class Project extends Common {
   @Column({ length: 20 })
   region: string;
 
+  @Column({ type: 'decimal' })
+  latitude: number;
+
+  @Column({ type: 'decimal' })
+  longitude: number;
+
   @ManyToOne((type) => User, (user) => user.idx)
   user: User;
 }
