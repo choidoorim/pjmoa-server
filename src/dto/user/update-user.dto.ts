@@ -1,16 +1,9 @@
-import { IsEmail, IsNumber, IsString, Length, Matches } from 'class-validator';
+import { IsEmail, IsNumber, IsString, Matches } from 'class-validator';
 import { REGEX, MESSAGES } from 'src/app.utils';
 
 export class UpdateUserDto {
   @IsEmail()
   readonly email: string;
-
-  @IsString()
-  @Length(8, 15)
-  @Matches(REGEX.PASSWORD_RULE, {
-    message: MESSAGES.PASSWORD_RULE_MESSAGE,
-  })
-  readonly password: string;
 
   @IsString()
   readonly firstName: string;

@@ -29,7 +29,7 @@ export class UserService {
     }
   }
 
-  async viewUserProfile(email: string) {
+  async viewUserProfile(userIdx: number) {
     const [userProfileResult] = await this.usersRepository.find({
       select: [
         'email',
@@ -39,10 +39,38 @@ export class UserService {
         'phoneNumber',
         'imageUrl',
       ],
-      where: { email: email, status: true },
+      where: { idx: userIdx, status: true },
     });
 
     return userProfileResult;
+  }
+
+  // update 는 find 와 save 조합을 이용.
+  async findUser(userIdx: number): Promise<User> {
+    return await this.usersRepository.findOne(userIdx);
+  }
+
+  async updateUserProfile(userInfo, userIdx) {
+    const queryRunner = await getConnection().createQueryRunner();
+    await queryRunner.startTransaction();
+    try {
+      const user: User = await this.findUser(userIdx);
+      user.email = userInfo.email;
+      user.firstName = userInfo.firstName;
+      user.lastName = userInfo.lastName;
+      user.age = userInfo.age;
+      user.phoneNumber = userInfo.phoneNumber;
+
+      const updateUserResult = await this.usersRepository.save(user);
+
+      await queryRunner.commitTransaction();
+      return updateUserResult;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new NotFoundException(`Failed SignUp ${error}`);
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async findUserPassword(email: string): Promise<User> {
