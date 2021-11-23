@@ -17,14 +17,16 @@ Delete : 파일 삭제
           ├── 📄user.controller.ts
           ├── 📄user.module.ts
           ├── 📄user.service.ts
+          ├── 📄user.entity.ts
+      └── 📂 notice
+          ├── 📄notice.controller.ts
+          ├── 📄notice.module.ts
+          ├── 📄notice.service.ts
+          ├── 📄notice.entity.ts
       └── 📂 dto
         └── 📂 user 
           ├── 📄create-user.dto.ts
           ├── 📄login-user.dto.ts
-        └── 📂 notice
-      └── 📂 entity
-        └── 📂 user 
-          ├── 📄user.entity.ts
         └── 📂 notice
       📄 main.ts
       📄 app.module.ts
