@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne } from 'typeorm';
-import { Common } from './common.entity';
-import { User } from './user.entity';
+import { Common } from '../common.entity';
+import { User } from '../user/user.entity';
 
 @Entity({ name: 'project' })
 export class Project extends Common {

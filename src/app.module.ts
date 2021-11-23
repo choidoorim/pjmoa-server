@@ -3,6 +3,7 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { NoticeModule } from './notice/notice.module';
+import { ProjectModule } from './project/project.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -25,7 +26,7 @@ import * as Joi from 'joi';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [`dist/entity/**/*.{ts,js}`],
+      entities: [`dist/**/*.{ts,js}`],
       synchronize: process.env.NODE_ENV == 'dev',
       logging: process.env.NODE_ENV == 'prod' ? true : ['error'],
       extra: {
@@ -34,6 +35,7 @@ import * as Joi from 'joi';
     }),
     UserModule,
     NoticeModule,
+    ProjectModule,
   ],
   controllers: [],
   providers: [],

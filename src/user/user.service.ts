@@ -1,24 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getConnection, Repository } from 'typeorm';
-import { User } from '../entity/user.entity';
+import { getConnection, Connection, Repository } from 'typeorm';
+import { User } from './user.entity';
+import { UserRepository } from './user.repository';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
+    private connection: Connection,
+    private usersRepository: UserRepository,
   ) {}
 
   async doUserRegistration(registerUserInfo: CreateUserDTO): Promise<User> {
-    const queryRunner = await getConnection().createQueryRunner();
+    const queryRunner = await this.connection.createQueryRunner();
     await queryRunner.startTransaction();
     try {
       // create: Active Record 에서 entity 에 BaseEntity 를 상속해서 사용하지 않도록 한다.
-      const user: User = await this.usersRepository.create(registerUserInfo);
+      const createUserInfo: User = await this.usersRepository.create(
+        registerUserInfo,
+      );
 
-      const result: User = await this.usersRepository.save(user);
-
+      const result: User = await this.usersRepository.doUserRegistration(
+        queryRunner.manager,
+        createUserInfo,
+      );
       await queryRunner.commitTransaction();
       return result;
     } catch (error) {
@@ -54,14 +60,17 @@ export class UserService {
     const queryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      const user: User = await this.findUser(userIdx);
-      user.email = userInfo.email;
-      user.firstName = userInfo.firstName;
-      user.lastName = userInfo.lastName;
-      user.age = userInfo.age;
-      user.phoneNumber = userInfo.phoneNumber;
+      const updateUserInfo: User = await this.findUser(userIdx);
+      updateUserInfo.email = userInfo.email;
+      updateUserInfo.firstName = userInfo.firstName;
+      updateUserInfo.lastName = userInfo.lastName;
+      updateUserInfo.age = userInfo.age;
+      updateUserInfo.phoneNumber = userInfo.phoneNumber;
 
-      const updateUserResult = await this.usersRepository.save(user);
+      const updateUserResult = await this.usersRepository.updateUserProfile(
+        queryRunner.manager,
+        updateUserInfo,
+      );
 
       await queryRunner.commitTransaction();
       return updateUserResult;

@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Notice } from '../entity/notice.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Notice } from './notice.entity';
+import { NoticeRepository } from './notice.repository';
 
 @Injectable()
 export class NoticeService {
   constructor(
-    @InjectRepository(Notice) private noticeRepository: Repository<Notice>,
+    private noticeRepository: NoticeRepository,
   ) {}
 
   async viewAllNotice(page: number, pageSize: number): Promise<Notice[]> {

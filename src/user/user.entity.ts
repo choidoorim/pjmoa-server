@@ -1,7 +1,7 @@
 import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Common } from './common.entity';
-import { Project } from './project.entity';
+import { Common } from '../common.entity';
+import { Project } from '../project/project.entity';
 
 @Entity({ name: 'user' })
 export class User extends Common {

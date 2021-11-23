@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NoticeController } from './notice.controller';
 import { NoticeService } from './notice.service';
-import { Notice } from '../entity/notice.entity';
+import { NoticeRepository } from './notice.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Notice])],
+  imports: [TypeOrmModule.forFeature([NoticeRepository])],
   controllers: [NoticeController],
   providers: [NoticeService],
 })
