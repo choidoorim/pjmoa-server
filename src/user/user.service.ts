@@ -29,10 +29,27 @@ export class UserService {
     }
   }
 
-  async findUser(email: string): Promise<User> {
-    const [findUserResult] = await this.usersRepository.find({
-      where: { email: email },
+  async viewUserProfile(email: string) {
+    const [userProfileResult] = await this.usersRepository.find({
+      select: [
+        'email',
+        'firstName',
+        'lastName',
+        'age',
+        'phoneNumber',
+        'imageUrl',
+      ],
+      where: { email: email, status: true },
     });
-    return findUserResult;
+
+    return userProfileResult;
+  }
+
+  async findUserPassword(email: string): Promise<User> {
+    const [userPasswordResult] = await this.usersRepository.find({
+      select: ['password'],
+      where: { email: email, status: true },
+    });
+    return userPasswordResult;
   }
 }

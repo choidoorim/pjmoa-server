@@ -5,6 +5,7 @@ import {
   Controller,
   UseGuards,
   Request,
+  Param,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entity/user.entity';
@@ -12,6 +13,7 @@ import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { JwtAuthGuard } from '../authentication/jwt-auth.guard';
 import { AuthService } from '../authentication/auth.service';
 import { LocalAuthGuard } from '../authentication/local-auth.guard';
+import { string } from 'joi';
 
 @Controller('user')
 export class UserController {
@@ -23,7 +25,29 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('test')
   async doTest(@Request() req) {
-    return await this.userService.findUser(req.user.email);
+    return await this.userService.findUserPassword(req.user.email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userIdx/profile')
+  async viewUserProfile(@Request() req, @Param('userIdx') userIdx: number) {
+    if (req.user.idx !== userIdx) {
+      return Object.assign({
+        isSuccess: false,
+        statusCode: 401,
+        statusMsg: 'The token ID and user ID are not matched',
+      });
+    }
+    const viewUserProfile = await this.userService.viewUserProfile(
+      req.user.email,
+    );
+
+    return Object.assign({
+      isSuccess: true,
+      statusCode: 201,
+      statusMsg: 'view User Profile Success',
+      data: { ...viewUserProfile },
+    });
   }
 
   @Post('register')

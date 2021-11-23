@@ -19,6 +19,6 @@ export abstract class Common {
   })
   updatedAt: Date;
 
-  @Column({ default: false })
+  @Column({ default: true })
   status: boolean;
 }
