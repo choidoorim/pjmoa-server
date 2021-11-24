@@ -15,15 +15,18 @@ import { AuthService } from '../authentication/auth.service';
 import { LocalAuthGuard } from '../authentication/local-auth.guard';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { UpdateUserDto } from '../dto/user/update-user.dto';
-import { response_format } from '../config/app.utils';
-import { baseResponse } from '../config/app.response';
+import { response_format } from '../app.utils';
+import { baseResponse } from '../config/baseResponse';
 
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
-  ) {}
+  ) {
+    this.userService = userService;
+    this.authService = authService;
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('test')

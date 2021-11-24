@@ -1,6 +1,6 @@
 import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Common } from '../common.entity';
+import { Common } from '../app.entity';
 import { Project } from '../project/project.entity';
 
 @Entity({ name: 'user' })
@@ -26,7 +26,7 @@ export class User extends Common {
   @Column({ length: 15 })
   phoneNumber: string;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   authStatus: boolean;
 
   @OneToMany((type) => Project, (project) => project.userIdx)

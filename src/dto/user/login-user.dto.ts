@@ -1,5 +1,5 @@
 import { IsEmail, IsString, Length, Matches } from 'class-validator';
-import { REGEX, MESSAGES } from 'src/config/app.utils';
+import { REGEX, MESSAGES } from 'src/app.utils';
 
 export class loginUserDTO {
   @IsEmail()

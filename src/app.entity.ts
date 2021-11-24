@@ -19,6 +19,6 @@ export abstract class Common {
   })
   updatedAt: Date;
 
-  @Column({ default: true })
+  @Column({ type: 'boolean', default: true })
   status: boolean;
 }

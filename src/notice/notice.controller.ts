@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { NoticeService } from './notice.service';
-import { response_format } from '../config/app.utils';
-import { baseResponse } from '../config/app.response';
+import { response_format } from '../app.utils';
+import { baseResponse } from '../config/baseResponse';
 
 @Controller('notice')
 export class NoticeController {
