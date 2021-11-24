@@ -4,16 +4,9 @@ import { NoticeRepository } from './notice.repository';
 
 @Injectable()
 export class NoticeService {
-  constructor(
-    private noticeRepository: NoticeRepository,
-  ) {}
+  constructor(private noticeRepository: NoticeRepository) {}
 
   async viewAllNotice(page: number, pageSize: number): Promise<Notice[]> {
-    const viewAllNoticeResult = await this.noticeRepository.find({
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
-
-    return viewAllNoticeResult;
+    return await this.noticeRepository.viewAllNotice(page, pageSize);
   }
 }

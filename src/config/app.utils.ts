@@ -9,6 +9,28 @@ const PASSWORD_COMPARE = async (password: string, hashPassword: string) => {
   return await bcrypt.compare(password, hashPassword);
 };
 
+const SUCCESS = ({ isSuccess, statusCode, statusMsg }, data) => {
+  return {
+    isSuccess: isSuccess,
+    statusCode: statusCode,
+    statusMsg: statusMsg,
+    data,
+  };
+};
+
+const ERROR = ({ isSuccess, statusCode, statusMsg }) => {
+  return {
+    isSuccess: isSuccess,
+    statusCode: statusCode,
+    statusMsg: statusMsg,
+  };
+};
+
+export const response_format = {
+  SUCCESS,
+  ERROR,
+};
+
 export const REGEX = {
   PASSWORD_RULE,
   PHONE_NUMBER_RULE,

@@ -15,6 +15,8 @@ import { AuthService } from '../authentication/auth.service';
 import { LocalAuthGuard } from '../authentication/local-auth.guard';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 import { UpdateUserDto } from '../dto/user/update-user.dto';
+import { response_format } from '../config/app.utils';
+import { baseResponse } from '../config/app.response';
 
 @Controller('user')
 export class UserController {
@@ -36,24 +38,20 @@ export class UserController {
     const doUserRegistration = await this.userService.doUserRegistration(
       registerUserInfo,
     );
-    return Object.assign({
-      isSuccess: true,
-      statusCode: 201,
-      statusMsg: 'create-User Success',
-      data: { ...doUserRegistration },
-    });
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.CREATE_USER_SUCCESS, {
+        ...doUserRegistration,
+      }),
+    );
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async doUserLogin(@Request() req) {
     const jwtToken = await this.authService.doUserLogin(req.user);
-    return {
-      isSuccess: true,
-      statusCode: 201,
-      statusMsg: 'login-User Success',
-      access_token: jwtToken,
-    };
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.USER_LOGIN_SUCCESS, jwtToken),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -63,20 +61,15 @@ export class UserController {
     @Param('userIdx') userIdx: number,
   ): Promise<User> {
     if (req.user.idx !== userIdx) {
-      return Object.assign({
-        isSuccess: false,
-        statusCode: 401,
-        statusMsg: 'The token ID and user ID are not matched',
-      });
+      return Object.assign(response_format.ERROR(baseResponse.TOKEN_NOT_MATCH));
     }
     const viewUserProfile = await this.userService.viewUserProfile(userIdx);
 
-    return Object.assign({
-      isSuccess: true,
-      statusCode: 201,
-      statusMsg: 'view User Profile Success',
-      data: { ...viewUserProfile },
-    });
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.USER_PROFILE_LOOKUP_SUCCESS, {
+        ...viewUserProfile,
+      }),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -90,11 +83,10 @@ export class UserController {
       userIdx,
     );
 
-    return Object.assign({
-      isSuccess: true,
-      statusCode: 201,
-      statusMsg: 'update User Profile Success',
-      data: { ...updateUserProfileResult },
-    });
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.USER_PROFILE_UPDATE_SUCCESS, {
+        ...updateUserProfileResult,
+      }),
+    );
   }
 }

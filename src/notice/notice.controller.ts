@@ -1,5 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { NoticeService } from './notice.service';
+import { response_format } from '../config/app.utils';
+import { baseResponse } from '../config/app.response';
 
 @Controller('notice')
 export class NoticeController {
@@ -13,11 +15,10 @@ export class NoticeController {
       query.page,
       query.pageSize,
     );
-    return Object.assign({
-      isSuccess: true,
-      statusCode: 200,
-      statusMsg: 'create-User Success',
-      data: { ...viewAllNoticeResult },
-    });
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.NOTICE_LOOKUP_SUCCESS, {
+        ...viewAllNoticeResult,
+      }),
+    );
   }
 }

@@ -34,6 +34,22 @@ export class UserRepository extends Repository<User> {
     return await transactionManager.save(updateUserInfo);
   }
 
+  public async viewUserProfile(userIdx: number) {
+    const [userProfileResult] = await this.find({
+      select: [
+        'email',
+        'firstName',
+        'lastName',
+        'age',
+        'phoneNumber',
+        'imageUrl',
+      ],
+      where: { idx: userIdx, status: true },
+    });
+
+    return userProfileResult;
+  }
+
   public async findUser(userIdx: number) {
     return await this.findOne(userIdx);
   }

@@ -29,19 +29,7 @@ export class UserService {
   }
 
   async viewUserProfile(userIdx: number) {
-    const [userProfileResult] = await this.usersRepository.find({
-      select: [
-        'email',
-        'firstName',
-        'lastName',
-        'age',
-        'phoneNumber',
-        'imageUrl',
-      ],
-      where: { idx: userIdx, status: true },
-    });
-
-    return userProfileResult;
+    return await this.usersRepository.viewUserProfile(userIdx);
   }
 
   async updateUserProfile(userInfo, userIdx): Promise<User> {
