@@ -1,6 +1,13 @@
-import { Column, CreateDateColumn, Entity, ManyToOne } from 'typeorm';
-import { Common } from '../app.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Common } from '../../app.entity';
 import { User } from '../user/user.entity';
+import { ProjectLike } from './projectLike.entity';
 
 @Entity({ name: 'project' })
 export class Project extends Common {
@@ -40,4 +47,7 @@ export class Project extends Common {
 
   @ManyToOne((type) => User, (user) => user.idx)
   user: User;
+
+  @OneToMany((type) => ProjectLike, (projectLike) => projectLike.projectIdx)
+  projectLike: ProjectLike[];
 }

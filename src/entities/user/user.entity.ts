@@ -1,7 +1,8 @@
 import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Common } from '../app.entity';
+import { Common } from '../../app.entity';
 import { Project } from '../project/project.entity';
+import { ProjectLike } from '../project/projectLike.entity';
 
 @Entity({ name: 'user' })
 export class User extends Common {
@@ -31,6 +32,9 @@ export class User extends Common {
 
   @OneToMany((type) => Project, (project) => project.userIdx)
   project: Project[];
+
+  @OneToMany((type) => ProjectLike, (projectLike) => projectLike.projectIdx)
+  projectLike: ProjectLike[];
 
   // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
   @BeforeInsert()

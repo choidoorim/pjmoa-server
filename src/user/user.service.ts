@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { getConnection, QueryRunner } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../entities/user/user.entity';
 import { UserRepository } from './user.repository';
 import { CreateUserDTO } from 'src/dto/user/create-user.dto';
 

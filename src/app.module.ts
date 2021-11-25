@@ -26,7 +26,7 @@ import * as Joi from 'joi';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [`dist/**/*.{ts,js}`],
+      entities: [`dist/entities/**/*.{ts,js}`],
       synchronize: process.env.NODE_ENV == 'dev',
       logging: process.env.NODE_ENV == 'prod' ? true : ['error'],
       extra: {

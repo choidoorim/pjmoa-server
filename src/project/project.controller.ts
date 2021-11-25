@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import * as NodeGeocoder from 'node-geocoder';
 import { CreateProjectDto } from '../dto/project/create-project.dto';
 import { ProjectService } from './project.service';
 import { response_format, findLatLong } from '../app.utils';
@@ -26,7 +25,7 @@ export class ProjectController {
     const registerProjectResult = await this.projectService.registerProject(
       projectInfo,
     );
-
+    console.log(registerProjectResult);
     return Object.assign(
       response_format.SUCCESS(
         baseResponse.PROJECT_REGISTER_SUCCESS,
