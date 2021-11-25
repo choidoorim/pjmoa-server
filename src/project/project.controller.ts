@@ -6,13 +6,13 @@ import { response_format, findLatLong } from '../app.utils';
 import { baseResponse } from '../config/baseResponse';
 import { JwtAuthGuard } from '../authentication/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {
     this.projectService = projectService;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async registerProject(@Body() projectInfo: CreateProjectDto, @Request() req) {
     if (req.user.idx !== projectInfo.userIdx) {
