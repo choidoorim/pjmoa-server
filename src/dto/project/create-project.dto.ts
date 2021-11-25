@@ -1,4 +1,9 @@
-import { IsDateString, IsNumber, IsString, Length } from 'class-validator';
+import {
+  IsDateString,
+  IsNumber,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateProjectDto {
   @IsNumber()

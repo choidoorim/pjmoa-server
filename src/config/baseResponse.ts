@@ -10,7 +10,10 @@ export const baseResponse = {
   CREATE_USER_SUCCESS: { isSuccess: true, statusCode: 201, statusMsg: 'create-User Success' },
 
   // NOTICE SUCCESS
-  NOTICE_LOOKUP_SUCCESS: { isSuccess: true, statusCode: 200, statusMsg: 'notice look up Success'},
+  NOTICE_LOOKUP_SUCCESS: { isSuccess: true, statusCode: 200, statusMsg: 'notice look up Success' },
+
+  // PROJECT SUCCESS
+  PROJECT_REGISTER_SUCCESS: { isSuccess: true, statusCode: 201, statusMsg: 'project register Success' },
 
   // COMMON FAIL
   TOKEN_NOT_MATCH: { isSuccess: false, statusCode: 401, statusMsg: 'The token ID and user ID are not matched' },

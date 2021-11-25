@@ -41,6 +41,7 @@ export class UserController {
     const doUserRegistration = await this.userService.doUserRegistration(
       registerUserInfo,
     );
+
     return Object.assign(
       response_format.SUCCESS(baseResponse.CREATE_USER_SUCCESS, {
         ...doUserRegistration,

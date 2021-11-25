@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import * as NodeGeocoder from 'node-geocoder';
 
 // utils: 정규표현식, 에러메시지 등을 다루는 파일.
 const PASSWORD_RULE = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -43,4 +44,13 @@ export const MESSAGES = {
 
 export const CHECK = {
   PASSWORD_COMPARE,
+};
+
+export const findLatLong = async (locationName) => {
+  const options = {
+    provider: 'openstreetmap',
+  };
+  const geocoder = NodeGeocoder(options);
+  const [regionLatLong] = await geocoder.geocode(locationName);
+  return regionLatLong;
 };

@@ -56,7 +56,7 @@ export class UserRepository extends Repository<User> {
 
   public async findUserPassword(email: string) {
     const [userPasswordResult] = await this.find({
-      select: ['password'],
+      select: ['idx', 'email', 'password'],
       where: { email: email, status: true },
     });
 
