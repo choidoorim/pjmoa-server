@@ -11,9 +11,9 @@ export class ProjectLike extends Common {
   @Column()
   projectIdx: number;
 
-  @ManyToOne((type) => User, (user) => user.idx)
+  @ManyToOne(() => User, (user) => user.idx)
   user: User;
 
-  @ManyToOne((type) => Project, (project) => project.idx)
+  @ManyToOne(() => Project, (project) => project.idx)
   project: Project;
 }
