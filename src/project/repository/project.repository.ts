@@ -4,7 +4,7 @@ import {
   TransactionManager,
   EntityManager,
 } from 'typeorm';
-import { Project } from '../entities/project/project.entity';
+import { Project } from '../../entities/project/project.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

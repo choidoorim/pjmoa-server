@@ -13,8 +13,8 @@ import { User } from '../entities/user/user.entity';
 import { JwtAuthGuard } from '../authentication/jwt-auth.guard';
 import { AuthService } from '../authentication/auth.service';
 import { LocalAuthGuard } from '../authentication/local-auth.guard';
-import { CreateUserDTO } from 'src/dto/user/create-user.dto';
-import { UpdateUserDto } from '../dto/user/update-user.dto';
+import { CreateUserDTO } from 'src/user/dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { response_format } from '../app.utils';
 import { baseResponse } from '../config/baseResponse';
 

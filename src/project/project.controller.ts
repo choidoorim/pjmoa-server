@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { CreateProjectDto } from '../dto/project/create-project.dto';
-import { LikeProjectDto } from '../dto/project/like-project.dto';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { LikeProjectDto } from './dto/like-project.dto';
 import { ProjectService } from './project.service';
 import { response_format, findLatLong } from '../app.utils';
 import { baseResponse } from '../config/baseResponse';

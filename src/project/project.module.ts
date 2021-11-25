@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProjectRepository } from './project.repository';
-import { ProjectLikeRepository } from './projectLike.repository';
+import { ProjectRepository } from './repository/project.repository';
+import { ProjectLikeRepository } from './repository/projectLike.repository';
 
 @Module({
   imports: [

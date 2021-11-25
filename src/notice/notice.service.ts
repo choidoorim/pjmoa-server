@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Notice } from '../entities/notice/notice.entity';
-import { NoticeRepository } from './notice.repository';
+import { NoticeRepository } from './repository/notice.repository';
 
 @Injectable()
 export class NoticeService {

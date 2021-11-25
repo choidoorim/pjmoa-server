@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Notice } from '../entities/notice/notice.entity';
+import { Notice } from '../../entities/notice/notice.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

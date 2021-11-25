@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectRepository } from './project.repository';
+import { ProjectRepository } from './repository/project.repository';
 import { getConnection, QueryRunner } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProjectLikeRepository } from './projectLike.repository';
+import { ProjectLikeRepository } from './repository/projectLike.repository';
 
 @Injectable()
 export class ProjectService {
