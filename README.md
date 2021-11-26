@@ -12,25 +12,30 @@ Delete : 파일 삭제
 ### :file_folder: 디렉토리 구조
 ```bash
 📂 src
- └── 📂 app
-      └── 📂 user 
-          ├── 📄user.controller.ts
-          ├── 📄user.module.ts
-          ├── 📄user.service.ts
-          ├── 📄user.entity.ts
-      └── 📂 notice
-          ├── 📄notice.controller.ts
-          ├── 📄notice.module.ts
-          ├── 📄notice.service.ts
-          ├── 📄notice.entity.ts
+  └── 📂 user 
       └── 📂 dto
-        └── 📂 user 
-          ├── 📄create-user.dto.ts
-          ├── 📄login-user.dto.ts
-        └── 📂 notice
-      📄 main.ts
-      📄 app.module.ts
-      📄 app.utils.ts
+      └── 📂 repository
+      ├── 📄user.controller.ts
+      ├── 📄user.module.ts
+      ├── 📄user.service.ts
+      ├── 📄user.entity.ts
+  └── 📂 notice
+      └── 📂 dto
+      └── 📂 repository
+      ├── 📄notice.controller.ts
+      ├── 📄notice.module.ts
+      ├── 📄notice.service.ts
+      ├── 📄notice.entity.ts
+  └── 📂 project
+      └── 📂 dto
+      └── 📂 repository
+      ├── 📄project.controller.ts
+      ├── 📄project.module.ts
+      ├── 📄project.service.ts
+  └── 📂 entities
+  📄 main.ts
+  📄 app.module.ts
+  📄 app.utils.ts
 📂 test
 📄 .gitignore
 📄 README.md

@@ -12,6 +12,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(process.env.SERVER_PORT);
+  console.log(`WebServer Port is ${process.env.SERVER_PORT}`);
 }
 bootstrap();
