@@ -15,6 +15,7 @@ export class ProjectRepository extends Repository<Project> {
     const queryBuilder = this.createQueryBuilder('project')
       .leftJoinAndSelect('project.projectLike', 'projectLike')
       .where('project.status = :status', { status: true })
+      .orderBy('project.createdAt', 'DESC')
       .skip(query.getSkip())
       .take(query.getTake());
 
