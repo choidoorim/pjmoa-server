@@ -45,9 +45,9 @@ export class Project extends Common {
   @Column({ type: 'decimal' })
   longitude: number;
 
-  @ManyToOne(() => User, (user) => user.idx)
+  @ManyToOne(() => User, (user) => user.project)
   user: User;
 
-  @OneToMany(() => ProjectLike, (projectLike) => projectLike.projectIdx)
+  @OneToMany(() => ProjectLike, (projectLike) => projectLike.project)
   projectLike: ProjectLike[];
 }

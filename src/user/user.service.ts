@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { getConnection, QueryRunner } from 'typeorm';
+import { getConnection, QueryRunner, UpdateResult } from 'typeorm';
 import { User } from '../entities/user/user.entity';
 import { UserRepository } from './repository/user.repository';
 import { CreateUserDTO } from 'src/user/dto/create-user.dto';
@@ -22,7 +22,9 @@ export class UserService {
       return result;
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      throw new NotFoundException(`Failed SignUp - ${error}`);
+      throw new NotFoundException(
+        `Failed SignUp - ${process.env.NODE_ENV == 'dev' ? error : null}`,
+      );
     } finally {
       await queryRunner.release();
     }
@@ -32,7 +34,7 @@ export class UserService {
     return await this.usersRepository.viewUserProfile(userIdx);
   }
 
-  async updateUserProfile(userInfo, userIdx): Promise<User> {
+  async updateUserProfile(userInfo, userIdx): Promise<UpdateResult> {
     const queryRunner: QueryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {

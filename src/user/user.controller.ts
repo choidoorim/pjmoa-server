@@ -7,6 +7,7 @@ import {
   UseGuards,
   Request,
   Param,
+  HttpCode,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user/user.entity';
@@ -34,30 +35,43 @@ export class UserController {
     return await this.userService.findUserPassword(req.user.email);
   }
 
+  @HttpCode(201)
   @Post('register')
   async doUserRegistration(
     @Body() registerUserInfo: CreateUserDTO,
   ): Promise<User> {
-    const doUserRegistration = await this.userService.doUserRegistration(
-      registerUserInfo,
-    );
+    try {
+      const doUserRegistration = await this.userService.doUserRegistration(
+        registerUserInfo,
+      );
 
-    return Object.assign(
-      response_format.SUCCESS(baseResponse.CREATE_USER_SUCCESS, {
-        ...doUserRegistration,
-      }),
-    );
+      return Object.assign(
+        response_format.SUCCESS(baseResponse.CREATE_USER_SUCCESS, {
+          ...doUserRegistration,
+        }),
+      );
+    } catch (e) {
+      console.log(`doUserRegistration - ${e}`);
+      return e.message;
+    }
   }
 
+  @HttpCode(201)
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async doUserLogin(@Request() req) {
-    const jwtToken = await this.authService.doUserLogin(req.user);
-    return Object.assign(
-      response_format.SUCCESS(baseResponse.USER_LOGIN_SUCCESS, jwtToken),
-    );
+    try {
+      const jwtToken = await this.authService.doUserLogin(req.user);
+      return Object.assign(
+        response_format.SUCCESS(baseResponse.USER_LOGIN_SUCCESS, jwtToken),
+      );
+    } catch (e) {
+      console.log(`doUserLogin - ${e}`);
+      return e.message;
+    }
   }
 
+  @HttpCode(200)
   @UseGuards(JwtAuthGuard)
   @Get(':userIdx/profile')
   async viewUserProfile(
@@ -76,21 +90,27 @@ export class UserController {
     );
   }
 
+  @HttpCode(200)
   @UseGuards(JwtAuthGuard)
   @Put(':userIdx/profile')
   async updateUserProfile(
     @Body() userInfo: UpdateUserDto,
     @Param('userIdx') userIdx: number,
   ) {
-    const updateUserProfileResult = await this.userService.updateUserProfile(
-      userInfo,
-      userIdx,
-    );
+    try {
+      const updateUserProfileResult = await this.userService.updateUserProfile(
+        userInfo,
+        userIdx,
+      );
 
-    return Object.assign(
-      response_format.SUCCESS(baseResponse.USER_PROFILE_UPDATE_SUCCESS, {
-        ...updateUserProfileResult,
-      }),
-    );
+      return Object.assign(
+        response_format.SUCCESS(baseResponse.USER_PROFILE_UPDATE_SUCCESS, {
+          ...updateUserProfileResult,
+        }),
+      );
+    } catch (e) {
+      console.log(`updateUserProfile - ${e}`);
+      return e.message;
+    }
   }
 }

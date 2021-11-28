@@ -1,10 +1,11 @@
-import { Entity, Column, BeforeInsert, OneToMany } from 'typeorm';
+import { Entity, Column, BeforeInsert, OneToMany, Unique } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Common } from '../../app.entity';
 import { Project } from '../project/project.entity';
 import { ProjectLike } from '../project/projectLike.entity';
 
 @Entity({ name: 'user' })
+@Unique(['email', 'phoneNumber'])
 export class User extends Common {
   @Column({ length: 45 })
   email: string;
@@ -30,10 +31,10 @@ export class User extends Common {
   @Column({ type: 'boolean', default: false })
   authStatus: boolean;
 
-  @OneToMany((type) => Project, (project) => project.userIdx)
+  @OneToMany((type) => Project, (project) => project.user)
   project: Project[];
 
-  @OneToMany((type) => ProjectLike, (projectLike) => projectLike.projectIdx)
+  @OneToMany((type) => ProjectLike, (projectLike) => projectLike.user)
   projectLike: ProjectLike[];
 
   // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
