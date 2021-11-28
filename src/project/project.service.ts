@@ -3,6 +3,7 @@ import { ProjectRepository } from './repository/project.repository';
 import { getConnection, QueryRunner } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectLikeRepository } from './repository/projectLike.repository';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class ProjectService {
@@ -14,6 +15,14 @@ export class ProjectService {
   ) {
     this.projectRepository = projectRepository;
     this.projectLikeRepository = projectLikeRepository;
+  }
+
+  async viewAllProject(query: PaginationDto) {
+    try {
+      return await this.projectRepository.viewAllProject(query);
+    } catch (error) {
+      throw new NotFoundException(`Failed View All Project - ${error}`);
+    }
   }
 
   async registerProject(projectInfo) {
@@ -40,13 +49,13 @@ export class ProjectService {
     const queryRunner: QueryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      const findLikeResult =
+      const findLikeStatus =
         await this.projectLikeRepository.findLikeByUserProjectIdx(
           projectLikeInfo.userIdx,
           projectLikeInfo.projectIdx,
         );
       // 좋아요를 처음 클릭했을 때
-      if (!findLikeResult) {
+      if (!findLikeStatus) {
         projectLikeResult = await this.projectLikeRepository.addGoodPoint(
           queryRunner.manager,
           projectLikeInfo,

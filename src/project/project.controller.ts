@@ -1,6 +1,15 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { LikeProjectDto } from './dto/like-project.dto';
+import { PaginationDto } from './dto/pagination.dto';
 import { ProjectService } from './project.service';
 import { response_format, findLatLong } from '../app.utils';
 import { baseResponse } from '../config/baseResponse';
@@ -13,13 +22,28 @@ export class ProjectController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get()
+  async viewAllProject(@Query() query: PaginationDto) {
+    const [dataList, totalCount] = await this.projectService.viewAllProject(
+      query,
+    );
+
+    return Object.assign(
+      response_format.SUCCESS(baseResponse.PROJECT_VIEW_ALL_SUCCESS, {
+        dataList,
+        totalCount,
+      }),
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   async registerProject(@Body() projectInfo: CreateProjectDto, @Request() req) {
-    if (req.user.idx !== projectInfo.userIdx) {
+    if (req.user.idx !== projectInfo.getUserIdx) {
       return Object.assign(response_format.ERROR(baseResponse.TOKEN_NOT_MATCH));
     }
 
-    const regionLocation = await findLatLong(projectInfo.region);
+    const regionLocation = await findLatLong(projectInfo.getRegion);
 
     // 위도 경도 데이터 추가.
     projectInfo['latitude'] = regionLocation.latitude;

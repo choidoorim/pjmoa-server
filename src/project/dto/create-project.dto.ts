@@ -2,28 +2,41 @@ import { IsDateString, IsNumber, IsString, Length } from 'class-validator';
 
 export class CreateProjectDto {
   @IsNumber()
-  userIdx: number;
+  private readonly userIdx: number;
 
   // 추후에 시작 날짜와 끝나는 날짜가 오늘날짜보다 작으면 안되는 validation 을 추가해야 된다.
   @IsDateString()
-  startDate: Date;
+  private readonly startDate: Date;
 
   @IsDateString()
-  endDate: Date;
+  private readonly endDate: Date;
 
   @IsString()
-  title: string;
+  private readonly title: string;
 
   @IsString()
-  contents: string;
+  private readonly contents: string;
 
   @IsNumber()
-  maxUser: number;
+  private readonly maxUser: number;
 
   @IsString()
-  kind: string;
+  private readonly kind: string;
 
   @IsString()
   @Length(0, 10)
-  region: string;
+  private readonly region: string;
+
+  constructor(userIdx: number, region: string) {
+    this.userIdx = userIdx;
+    this.region = region;
+  }
+
+  get getUserIdx(): number {
+    return this.userIdx;
+  }
+
+  get getRegion(): string {
+    return this.region;
+  }
 }

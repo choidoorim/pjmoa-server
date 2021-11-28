@@ -39,10 +39,10 @@ export class Project extends Common {
   @Column({ length: 20 })
   region: string;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', precision: 18, scale: 10 })
   latitude: number;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', precision: 18, scale: 10 })
   longitude: number;
 
   @ManyToOne(() => User, (user) => user.project)

@@ -12,6 +12,7 @@ export const baseResponse = {
   // PROJECT SUCCESS
   PROJECT_REGISTER_SUCCESS: { isSuccess: true, statusCode: 201, statusMsg: 'project register Success' },
   PROJECT_LIKE_CHANGE_SUCCESS: { isSuccess: true, statusCode: 201, statusMsg: 'project Like Change Success' },
+  PROJECT_VIEW_ALL_SUCCESS: { isSuccess: true, statusCode: 200, statusMsg: 'all project view Success' },
 
   // COMMON FAIL
   TOKEN_NOT_MATCH: { isSuccess: false, statusCode: 401, statusMsg: 'The token ID and user ID are not matched' },
