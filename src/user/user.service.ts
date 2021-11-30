@@ -3,6 +3,7 @@ import { getConnection, QueryRunner, UpdateResult } from 'typeorm';
 import { User } from '../entities/user/user.entity';
 import { UserRepository } from './repository/user.repository';
 import { CreateUserDTO } from 'src/user/dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -34,7 +35,10 @@ export class UserService {
     return await this.usersRepository.viewUserProfile(userIdx);
   }
 
-  async updateUserProfile(userInfo, userIdx): Promise<UpdateResult> {
+  async updateUserProfile(
+    userInfo: UpdateUserDto,
+    userIdx,
+  ): Promise<UpdateResult> {
     const queryRunner: QueryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {

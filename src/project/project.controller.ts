@@ -1,7 +1,8 @@
 import {
   Body,
   Controller,
-  Get, Param,
+  Get,
+  Param,
   Post,
   Query,
   Request,
@@ -24,9 +25,7 @@ export class ProjectController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async viewAllProject(@Query() query: PaginationDto) {
-    const result = await this.projectService.viewAllProject(
-      query,
-    );
+    const result = await this.projectService.viewAllProject(query);
 
     return Object.assign(
       response_format.SUCCESS(baseResponse.PROJECT_VIEW_ALL_SUCCESS, result),
@@ -42,11 +41,11 @@ export class ProjectController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async registerProject(@Body() projectInfo: CreateProjectDto, @Request() req) {
-    if (req.user.idx !== projectInfo.getUserIdx) {
+    if (req.user.idx !== projectInfo.userIdx) {
       return Object.assign(response_format.ERROR(baseResponse.TOKEN_NOT_MATCH));
     }
 
-    const regionLocation = await findLatLong(projectInfo.getRegion);
+    const regionLocation = await findLatLong(projectInfo.region);
 
     // 위도 경도 데이터 추가.
     projectInfo['latitude'] = regionLocation.latitude;

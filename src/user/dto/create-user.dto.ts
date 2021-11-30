@@ -5,27 +5,27 @@ import { REGEX, MESSAGES } from 'src/app.utils';
 
 export class CreateUserDTO {
   @IsEmail()
-  readonly email: string;
+  private readonly email: string;
 
   @IsString()
   @Length(8, 15)
   @Matches(REGEX.PASSWORD_RULE, {
     message: MESSAGES.PASSWORD_RULE_MESSAGE,
   })
-  readonly password: string;
+  private readonly password: string;
 
   @IsString()
-  readonly firstName: string;
+  private readonly firstName: string;
 
   @IsString()
-  readonly lastName: string;
+  private readonly lastName: string;
 
   @IsNumber()
-  readonly age: number;
+  private readonly age: number;
 
   @IsString()
   @Matches(REGEX.PHONE_NUMBER_RULE, {
     message: MESSAGES.PHONE_NUMBER_MESSAGE,
   })
-  readonly phoneNumber: string;
+  private readonly phoneNumber: string;
 }

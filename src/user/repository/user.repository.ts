@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { User } from '../../entities/user/user.entity';
 import { Injectable } from '@nestjs/common';
+import {UpdateUserDto} from "../dto/update-user.dto";
 
 @Injectable()
 @EntityRepository(User)
@@ -22,7 +23,7 @@ export class UserRepository extends Repository<User> {
 
   public async updateUserProfile(
     @TransactionManager() transactionManager: EntityManager,
-    userInfo,
+    userInfo: UpdateUserDto,
     userIdx,
   ): Promise<UpdateResult> {
     const updateUserInfo: UpdateResult = await transactionManager

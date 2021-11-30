@@ -6,6 +6,8 @@ import { ProjectLikeRepository } from './repository/projectLike.repository';
 import { PaginationDto } from './dto/pagination.dto';
 import { LikeProjectDto } from './dto/like-project.dto';
 import { ProjectLike } from '../entities/project/projectLike.entity';
+import { CreateProjectDto } from './dto/create-project.dto';
+import {Project} from "../entities/project/project.entity";
 
 @Injectable()
 export class ProjectService {
@@ -21,10 +23,7 @@ export class ProjectService {
 
   async viewAllProject(query: PaginationDto) {
     try {
-      const viewAllProjectResult = await this.projectRepository.viewAllProject(
-        query,
-      );
-      return viewAllProjectResult;
+      return await this.projectRepository.viewAllProject(query);
     } catch (error) {
       throw new NotFoundException(`Failed View All Project - ${error}`);
     }
@@ -49,7 +48,7 @@ export class ProjectService {
     }
   }
 
-  async registerProject(projectInfo) {
+  async registerProject(projectInfo: CreateProjectDto): Promise<Project[]> {
     const queryRunner: QueryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {

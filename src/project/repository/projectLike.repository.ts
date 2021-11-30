@@ -17,8 +17,8 @@ export class ProjectLikeRepository extends Repository<ProjectLike> {
   ): Promise<ProjectLike> {
     return await this.findOne({
       where: {
-        userIdx: projectLikeInfo.getUserIdx,
-        projectIdx: projectLikeInfo.getProjectIdx,
+        userIdx: projectLikeInfo.userIdx,
+        projectIdx: projectLikeInfo.projectIdx,
       },
     });
   }
@@ -32,8 +32,8 @@ export class ProjectLikeRepository extends Repository<ProjectLike> {
       .insert()
       .into(ProjectLike)
       .values({
-        userIdx: projectLikeInfo.getUserIdx,
-        projectIdx: projectLikeInfo.getProjectIdx,
+        userIdx: projectLikeInfo.userIdx,
+        projectIdx: projectLikeInfo.projectIdx,
       })
       .execute();
   }

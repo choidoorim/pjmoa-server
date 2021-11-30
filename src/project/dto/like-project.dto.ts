@@ -2,21 +2,21 @@ import { IsNumber } from 'class-validator';
 
 export class LikeProjectDto {
   @IsNumber()
-  private readonly userIdx: number;
+  private readonly _userIdx: number;
 
   @IsNumber()
-  private readonly projectIdx: number;
+  private readonly _projectIdx: number;
 
   constructor(userIdx: number, projectIdx: number) {
-    this.userIdx = userIdx;
-    this.projectIdx = projectIdx;
+    this._userIdx = userIdx;
+    this._projectIdx = projectIdx;
   }
 
-  get getUserIdx(): number {
-    return this.userIdx;
+  get userIdx(): number {
+    return this._userIdx;
   }
 
-  get getProjectIdx(): number {
-    return this.projectIdx;
+  get projectIdx(): number {
+    return this._projectIdx;
   }
 }
