@@ -1,7 +1,7 @@
 import {
   Body,
   Controller,
-  Get,
+  Get, Param,
   Post,
   Query,
   Request,
@@ -24,16 +24,19 @@ export class ProjectController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async viewAllProject(@Query() query: PaginationDto) {
-    const [dataList, totalCount] = await this.projectService.viewAllProject(
+    const result = await this.projectService.viewAllProject(
       query,
     );
 
     return Object.assign(
-      response_format.SUCCESS(baseResponse.PROJECT_VIEW_ALL_SUCCESS, {
-        dataList,
-        totalCount,
-      }),
+      response_format.SUCCESS(baseResponse.PROJECT_VIEW_ALL_SUCCESS, result),
     );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:projectIdx/detail')
+  async viewProject(@Param('projectIdx') projectIdx: number) {
+    return await this.projectService.viewProject(projectIdx);
   }
 
   @UseGuards(JwtAuthGuard)

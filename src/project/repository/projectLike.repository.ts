@@ -3,40 +3,48 @@ import {
   Repository,
   TransactionManager,
   EntityManager,
+  InsertResult,
 } from 'typeorm';
 import { ProjectLike } from '../../entities/project/projectLike.entity';
 import { Injectable } from '@nestjs/common';
+import { LikeProjectDto } from '../dto/like-project.dto';
 
 @Injectable()
 @EntityRepository(ProjectLike)
 export class ProjectLikeRepository extends Repository<ProjectLike> {
   async findLikeByUserProjectIdx(
-    userIdx: number,
-    projectIdx: number,
+    projectLikeInfo: LikeProjectDto,
   ): Promise<ProjectLike> {
     return await this.findOne({
-      where: { userIdx: userIdx, projectIdx: projectIdx },
+      where: {
+        userIdx: projectLikeInfo.getUserIdx,
+        projectIdx: projectLikeInfo.getProjectIdx,
+      },
     });
   }
 
   async addGoodPoint(
     @TransactionManager() transactionManager: EntityManager,
-    projectLikeInfo,
-  ) {
-    const projectLike: ProjectLike[] = this.create(projectLikeInfo);
-
-    return await transactionManager.save(projectLike);
+    projectLikeInfo: LikeProjectDto,
+  ): Promise<InsertResult> {
+    return await transactionManager
+      .createQueryBuilder()
+      .insert()
+      .into(ProjectLike)
+      .values({
+        userIdx: projectLikeInfo.getUserIdx,
+        projectIdx: projectLikeInfo.getProjectIdx,
+      })
+      .execute();
   }
 
   async changeGoodPoint(
     @TransactionManager() transactionManager: EntityManager,
-    projectLikeInfo,
+    projectLikeInfo: LikeProjectDto,
   ): Promise<ProjectLike> {
     const likeInfo: ProjectLike = await this.findLikeByUserProjectIdx(
-      projectLikeInfo.userIdx,
-      projectLikeInfo.projectIdx,
+      projectLikeInfo,
     );
-    // 좋아요를 클릭 한 것이기에 현재 값에서 반대로.
     likeInfo.status = !likeInfo.status;
 
     return await transactionManager.save(likeInfo);

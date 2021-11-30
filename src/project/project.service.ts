@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProjectRepository } from './repository/project.repository';
-import { getConnection, QueryRunner } from 'typeorm';
+import { getConnection, InsertResult, QueryRunner } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectLikeRepository } from './repository/projectLike.repository';
 import { PaginationDto } from './dto/pagination.dto';
+import { LikeProjectDto } from './dto/like-project.dto';
+import { ProjectLike } from '../entities/project/projectLike.entity';
 
 @Injectable()
 export class ProjectService {
@@ -19,9 +21,31 @@ export class ProjectService {
 
   async viewAllProject(query: PaginationDto) {
     try {
-      return await this.projectRepository.viewAllProject(query);
+      const viewAllProjectResult = await this.projectRepository.viewAllProject(
+        query,
+      );
+      return viewAllProjectResult;
     } catch (error) {
       throw new NotFoundException(`Failed View All Project - ${error}`);
+    }
+  }
+
+  async viewProject(projectIdx: number) {
+    try {
+      const viewProjectResult = await this.projectRepository.viewProject(
+        projectIdx,
+      );
+      // 기능 구현은 됨(하지만 하드코딩.). typeorm 의 join on 이 안되는 문제(?) 를 어떻게 해결해야 될까..
+      const result = [];
+      for (let i = 0; i < viewProjectResult.projectLike.length; i++) {
+        if (viewProjectResult.projectLike[i].status === true) {
+          result.push(viewProjectResult.projectLike[i]);
+        }
+      }
+      viewProjectResult.projectLike = result;
+      return viewProjectResult;
+    } catch (error) {
+      throw new NotFoundException(`Failed View Project - ${error}`);
     }
   }
 
@@ -44,15 +68,16 @@ export class ProjectService {
     }
   }
 
-  async projectLikeChange(projectLikeInfo) {
+  async projectLikeChange(
+    projectLikeInfo: LikeProjectDto,
+  ): Promise<InsertResult | ProjectLike> {
     let projectLikeResult;
     const queryRunner: QueryRunner = await getConnection().createQueryRunner();
     await queryRunner.startTransaction();
     try {
       const findLikeStatus =
         await this.projectLikeRepository.findLikeByUserProjectIdx(
-          projectLikeInfo.userIdx,
-          projectLikeInfo.projectIdx,
+          projectLikeInfo,
         );
       // 좋아요를 처음 클릭했을 때
       if (!findLikeStatus) {
