@@ -1,12 +1,12 @@
-import { IsInt } from 'class-validator';
+import { IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PaginationDto {
-  @IsInt()
+  @IsNumber()
   @Type(() => Number)
   private readonly pageNo: number | 1;
 
-  @IsInt()
+  @IsNumber()
   @Type(() => Number)
   private readonly pageSize: number | 10;
 

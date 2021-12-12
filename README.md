@@ -38,8 +38,11 @@ Delete : 파일 삭제
   📄 app.utils.ts
 📂 test
 📄 .gitignore
+📄 .env.dev
+📄 .env.prod
 📄 README.md
 ```
+
 <!-- #### :wrench: 디렉토리 별 담당 기능
 - Route : 라우팅 처리, 서버와 클라이언트의 통신을 위한 인터페이스를 제공
 - Controller : req, res
@@ -56,3 +59,9 @@ Delete : 파일 삭제
 
 ### :clipboard: Architecture
 ![아키텍처](https://user-images.githubusercontent.com/63203480/122184639-613af680-cec7-11eb-8cd1-d99b8c7a70d1.PNG)
+
+### :clipboard: env 파일
+```
+.env.dev  : 테스트 서버, DB 에 반영되는 환경 변수들
+.env.prod : 실제 서버, DB 에 반영되는 환경 변수들
+```

@@ -19,11 +19,12 @@ export class ProjectRepository extends Repository<Project> {
     //   .skip(query.getSkip())
     //   .take(query.getTake())
     //   .getMany();
-    return await this
-      .query(`select *, (select count(*) from projectLike pL where p.idx = pL.projectIdx and pL.status = true) as projectLikeCount
+    return await this.query(
+      `select *, (select count(*) from projectLike pL where p.idx = pL.projectIdx and pL.status = true) as projectLikeCount
                     from project p
                     where p.status = true order by p.createdAt DESC LIMIT ${query.getSkip()}, ${query.getTake()}
-                    `);
+             `,
+    );
   }
 
   async viewProject(projectIdx: number) {
