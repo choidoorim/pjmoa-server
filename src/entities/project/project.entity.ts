@@ -9,6 +9,7 @@ import { Common } from '../../app.entity';
 import { User } from '../user/user.entity';
 import { ProjectLike } from './projectLike.entity';
 import { Participation } from './participation.entity';
+import { Member } from './member.entity';
 
 @Entity({ name: 'project' })
 export class Project extends Common {
@@ -54,4 +55,7 @@ export class Project extends Common {
 
   @OneToMany(() => Participation, (participation) => participation.project)
   participation: Participation[];
+
+  @OneToMany(() => Member, (member) => member.project)
+  member: Member[];
 }

@@ -4,6 +4,7 @@ import { Common } from '../../app.entity';
 import { Project } from '../project/project.entity';
 import { ProjectLike } from '../project/projectLike.entity';
 import { Participation } from '../project/participation.entity';
+import { Member } from '../project/member.entity';
 
 @Entity({ name: 'user' })
 @Unique(['email', 'phoneNumber'])
@@ -32,14 +33,17 @@ export class User extends Common {
   @Column({ type: 'boolean', default: false })
   authStatus: boolean;
 
-  @OneToMany((type) => Project, (project) => project.user)
+  @OneToMany(() => Project, (project) => project.user)
   project: Project[];
 
-  @OneToMany((type) => ProjectLike, (projectLike) => projectLike.user)
+  @OneToMany(() => ProjectLike, (projectLike) => projectLike.user)
   projectLike: ProjectLike[];
 
-  @OneToMany((type) => Participation, (participation) => participation.user)
+  @OneToMany(() => Participation, (participation) => participation.user)
   participation: Participation[];
+
+  @OneToMany(() => Member, (member) => member.user)
+  member: Member[];
 
   // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
   @BeforeInsert()
