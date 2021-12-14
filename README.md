@@ -12,6 +12,7 @@ Delete : 파일 삭제
 ### :file_folder: 디렉토리 구조
 ```bash
 📂 src
+  └── 📂 config 
   └── 📂 user 
       └── 📂 dto
       └── 📂 repository
@@ -33,6 +34,13 @@ Delete : 파일 삭제
       ├── 📄project.module.ts
       ├── 📄project.service.ts
   └── 📂 entities
+      └── 📂 notice 
+          ├── 📄notice.entity.ts
+      └── 📂 project 
+          ├── 📄project.entity.ts
+          ├── 📄projectLike.entity.ts
+      └── 📂 user
+          ├── 📄user.entity.ts
   📄 main.ts
   📄 app.module.ts
   📄 app.utils.ts

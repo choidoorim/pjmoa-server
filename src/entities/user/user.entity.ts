@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Common } from '../../app.entity';
 import { Project } from '../project/project.entity';
 import { ProjectLike } from '../project/projectLike.entity';
+import { Participation } from '../project/participation.entity';
 
 @Entity({ name: 'user' })
 @Unique(['email', 'phoneNumber'])
@@ -36,6 +37,9 @@ export class User extends Common {
 
   @OneToMany((type) => ProjectLike, (projectLike) => projectLike.user)
   projectLike: ProjectLike[];
+
+  @OneToMany((type) => Participation, (participation) => participation.user)
+  participation: Participation[];
 
   // BeforeInsert() : DB 에 insert 되기 전에 이뤄지는 로직.
   @BeforeInsert()
