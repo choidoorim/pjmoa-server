@@ -73,3 +73,13 @@ Delete : 파일 삭제
 .env.dev  : 테스트 서버, DB 에 반영되는 환경 변수들
 .env.prod : 실제 서버, DB 에 반영되는 환경 변수들
 ```
+#### .env
+```
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_NAME=
+DB_CONNECTION_LIMIT=
+SERVER_PORT=
+```
